@@ -13,17 +13,21 @@ Both final models use collective classification (CC): a first LightGBM model sco
 
 ## Reproducing the submissions quickly
 
-`final_models.ipynb` trains only my 2 final models (same code and settings as the main notebook) and saves both submission files in `submissions/`. It takes around 5-10 minutes and needs `train.csv`, `test.csv` and `txs_edgelist.csv` in the `data/` folder.
+`final_models.ipynb` trains only my 2 final models (same code and settings as the main notebook) and saves both submission files in `submissions/`. Its first cell installs the packages it needs. It takes around 5-10 minutes and needs `train.csv`, `test.csv` and `txs_edgelist.csv` in the `data/` folder.
 
 ## Repository structure
 
 ```
-e1155604.ipynb        full notebook (EDA, feature engineering, models, final predictions)
+e1155604.ipynb        full notebook (EDA, feature engineering, all experiments, final predictions)
+final_models.ipynb    trains only the 2 final models and saves the submission files
 submissions/          the 2 final prediction files
+    final_cc_spread_smote_with_pca.csv
+    final_cc_pagerank_smote_with_pca.csv
+README.md
 .gitignore
 ```
 
-## Notebook outline
+## Notebook outline (`e1155604.ipynb`)
 
 1. Exploratory data analysis
 2. Data preprocessing
@@ -38,7 +42,7 @@ submissions/          the 2 final prediction files
 
 ## How to run
 
-1. The competition data is not included in this repository. Download `train.csv`, `test.csv` and `txs_edgelist.csv` from the competition page and put them in a `data/` folder next to the notebook:
+1. The competition data is not included in this repository. Download `train.csv`, `test.csv` and `txs_edgelist.csv` from the competition page and put them in a `data/` folder next to the notebooks:
 
    ```
    data/train.csv
@@ -46,12 +50,12 @@ submissions/          the 2 final prediction files
    data/txs_edgelist.csv
    ```
 
-2. Install the packages (the first cell of the notebook also does this):
+2. Install the packages (the first cell of each notebook does this):
 
    ```
    pip install numpy pandas scipy matplotlib scikit-learn lightgbm xgboost torch optuna networkx imbalanced-learn
    ```
 
-3. Run the notebook from top to bottom. The predictions are saved in the `submissions/` folder.
+3. Run `final_models.ipynb` to get only the submission files, or `e1155604.ipynb` from top to bottom for the full process. Both save the predictions in the `submissions/` folder.
 
-Note: a full run should take 4-5 hours
+Note: a full run of of `e1155604.ipynb` should take 4-5 hours
