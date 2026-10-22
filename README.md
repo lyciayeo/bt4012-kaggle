@@ -1,0 +1,53 @@
+# BT4012 Kaggle Competition: Detecting Illicit Bitcoin Transactions
+
+This repository contains my notebook for the BT4012 kaggle competition. Each transaction is a node in a Bitcoin payment graph with 165 anonymised features. The task is to train on the labelled transactions from time steps 1-35 and rank the transactions from steps 36-49 by how likely they are to be illicit. The competition metric is ROC-AUC.
+
+## Final models
+
+Both final models use collective classification (CC): a first LightGBM model scores every transaction, and a second LightGBM model uses each transaction's features together with summaries of its neighbours' scores. Both use SMOTE on the second stage and 10 PCA components learned from the labelled and unlabelled training transactions.
+
+| Submission file | Model | Public leaderboard ROC-AUC |
+|---|---|---|
+| `final_cc_spread_smote_with_pca.csv` | CC + spread of neighbour scores + SMOTE + PCA | 0.96801 |
+| `final_cc_pagerank_smote_with_pca.csv` | CC + score PageRank + SMOTE + PCA | 0.96475 |
+
+## Repository structure
+
+```
+e1155604.ipynb        full notebook (EDA, feature engineering, models, final predictions)
+submissions/          the 2 final prediction files
+.gitignore
+```
+
+## Notebook outline
+
+1. Exploratory data analysis
+2. Data preprocessing
+3. Baseline model and validation design (expanding-window forward validation)
+4. Feature engineering (directional neighbour means, network measures from Lecture 8, PCA)
+5. Feature selection
+6. Model exploration (model families and class imbalance)
+7. Graph models and ensembles (GNN, collective classification)
+8. Hyperparameter tuning (Optuna)
+9. Model selection
+10. Prediction
+
+## How to run
+
+1. The competition data is not included in this repository. Download `train.csv`, `test.csv` and `txs_edgelist.csv` from the competition page and put them in a `data/` folder next to the notebook:
+
+    ```
+    data/train.csv
+    data/test.csv
+    data/txs_edgelist.csv
+    ```
+
+2. Install the packages (the first cell of the notebook also does this):
+
+    ```
+    pip install numpy pandas scipy matplotlib scikit-learn lightgbm xgboost torch optuna networkx imbalanced-learn
+    ```
+
+3. Run the notebook from top to bottom. The predictions are saved in the `submissions/` folder.
+
+Note: a full run should take 4-5 hours
