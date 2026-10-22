@@ -6,10 +6,14 @@ This repository contains my notebook for the BT4012 kaggle competition. Each tra
 
 Both final models use collective classification (CC): a first LightGBM model scores every transaction, and a second LightGBM model uses each transaction's features together with summaries of its neighbours' scores. Both use SMOTE on the second stage and 10 PCA components learned from the labelled and unlabelled training transactions.
 
-| Submission file | Model | Public leaderboard ROC-AUC |
-|---|---|---|
-| `final_cc_spread_smote_with_pca.csv` | CC + spread of neighbour scores + SMOTE + PCA | 0.96801 |
-| `final_cc_pagerank_smote_with_pca.csv` | CC + score PageRank + SMOTE + PCA | 0.96475 |
+| Submission file                        | Model                                         | Public leaderboard ROC-AUC |
+| -------------------------------------- | --------------------------------------------- | -------------------------- |
+| `final_cc_spread_smote_with_pca.csv`   | CC + spread of neighbour scores + SMOTE + PCA | 0.96801                    |
+| `final_cc_pagerank_smote_with_pca.csv` | CC + score PageRank + SMOTE + PCA             | 0.96475                    |
+
+## Reproducing the submissions quickly
+
+`final_models.ipynb` trains only my 2 final models (same code and settings as the main notebook) and saves both submission files in `submissions/`. It takes around 5-10 minutes and needs `train.csv`, `test.csv` and `txs_edgelist.csv` in the `data/` folder.
 
 ## Repository structure
 
@@ -36,17 +40,17 @@ submissions/          the 2 final prediction files
 
 1. The competition data is not included in this repository. Download `train.csv`, `test.csv` and `txs_edgelist.csv` from the competition page and put them in a `data/` folder next to the notebook:
 
-    ```
-    data/train.csv
-    data/test.csv
-    data/txs_edgelist.csv
-    ```
+   ```
+   data/train.csv
+   data/test.csv
+   data/txs_edgelist.csv
+   ```
 
 2. Install the packages (the first cell of the notebook also does this):
 
-    ```
-    pip install numpy pandas scipy matplotlib scikit-learn lightgbm xgboost torch optuna networkx imbalanced-learn
-    ```
+   ```
+   pip install numpy pandas scipy matplotlib scikit-learn lightgbm xgboost torch optuna networkx imbalanced-learn
+   ```
 
 3. Run the notebook from top to bottom. The predictions are saved in the `submissions/` folder.
 
